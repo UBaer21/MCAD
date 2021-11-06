@@ -126,7 +126,7 @@ module block(width,length,height,axle_hole=false,reinforcement=false, hollow_kno
 			if (width>1 && length>1) for (ycount=[1:width-1])
 				for (xcount=[1:length-1])
 					translate([xcount*knob_spacing,ycount*knob_spacing,0]) post(height);
-			if(round == true && width == length)translate([overall_width/2,overall_length/2,block_height/3-roof_thickness]) difference(){
+			if(round == true && width == length && height>1/3)translate([overall_width/2,overall_length/2,block_height/3-roof_thickness]) difference(){
 					cylinder((height-1/3)*block_height+roof_thickness,d=overall_width,$fs=cylinder_precision,$fa=5);
 					cylinder(height*block_height*2,d=overall_width-wall_thickness*2,center=true,$fs=cylinder_precision,$fa=5);
 				    }

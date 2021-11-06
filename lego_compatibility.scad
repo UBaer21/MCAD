@@ -1,19 +1,21 @@
 // This file is placed under the public domain
 
-// from: http://www.thingiverse.com/thing:9512
 // Author: nefercheprure
 
-// Examples:
-//   standard LEGO 2x1 tile has no pin
-//      block(1,2,1/3,reinforcement=false,flat_top=true);
-//   standard LEGO 2x1 flat has pin
+
+// // Examples:
+// //  standard LEGO 2x1 tile has no pin
+//    block(1,2,1/3,reinforcement=false,flat_top=true);
+// //  standard LEGO 2x1 flat has pin
 //      block(1,2,1/3,reinforcement=true);
-//   standard LEGO 2x1 brick has pin
+// //  standard LEGO 2x1 brick has pin
 //      block(1,2,1,reinforcement=true);
-//   standard LEGO 2x1 brick without pin
+// //  standard LEGO 2x1 brick without pin
 //      block(1,2,1,reinforcement=false);
-//   standard LEGO 2x1x5 brick has no pin and has hollow knobs
+// //  standard LEGO 2x1x5 brick has no pin and has hollow knobs
 //      block(1,2,5,reinforcement=false,hollow_knob=true);
+// //  standard LEGO 2x2x1/3 brick round no solid bottom
+//      block(2,2,1/3,reinforcement=true,solid_bottom=false,round=true);
 
 
 knob_diameter=4.8;		//knobs on top of blocks
@@ -31,32 +33,32 @@ cylinder_precision=0.5;
 
 /* EXAMPLES:
 
-block(2,1,1/3,axle_hole=false,circular_hole=true,reinforcement=true,hollow_knob=true,flat_top=true);
+block(2,1,1/3,axle_hole=false,circular_hole=true,reinforcement=true,hollow_knob=true,flat_top=true, solid_bottom=true);
 
 translate([50,-10,0])
-	block(1,2,1/3,axle_hole=false,circular_hole=true,reinforcement=false,hollow_knob=true,flat_top=true);
+	block(1,2,1/3,axle_hole=false,circular_hole=true,reinforcement=false,hollow_knob=true,flat_top=true, solid_bottom=true);
 
 translate([10,0,0])
-	block(2,2,1/3,axle_hole=false,circular_hole=true,reinforcement=true,hollow_knob=true,flat_top=true);
+	block(2,2,1/3,axle_hole=false,circular_hole=true,reinforcement=true,hollow_knob=true,flat_top=true, solid_bottom=true);
 translate([30,0,0])
-	block(2,2,1/3,axle_hole=false,circular_hole=true,reinforcement=true,hollow_knob=false,flat_top=false);
+	block(2,2,1/3,axle_hole=false,circular_hole=true,reinforcement=true,hollow_knob=false,flat_top=false, solid_bottom=true);
 translate([50,0,0])
-	block(2,2,1/3,axle_hole=false,circular_hole=true,reinforcement=true,hollow_knob=true,flat_top=false);
+	block(2,2,1/3,axle_hole=false,circular_hole=true,reinforcement=true,hollow_knob=true,flat_top=false, solid_bottom=true);
 translate([0,20,0])
-	block(3,2,2/3,axle_hole=false,circular_hole=true,reinforcement=true,hollow_knob=true,flat_top=false);
+	block(3,2,2/3,axle_hole=false,circular_hole=true,reinforcement=true,hollow_knob=true,flat_top=false, solid_bottom=true);
 translate([20,20,0])
-	block(3,2,1,axle_hole=true,circular_hole=false,reinforcement=true,hollow_knob=false,flat_top=false);
+	block(3,2,1,axle_hole=true,circular_hole=false,reinforcement=true,hollow_knob=false,flat_top=false, solid_bottom=true);
 translate([40,20,0])
-	block(3,2,1/3,axle_hole=false,circular_hole=false,reinforcement=false,hollow_knob=false,flat_top=false);
+	block(3,2,1/3,axle_hole=false,circular_hole=false,reinforcement=false,hollow_knob=false,flat_top=false, solid_bottom=true);
 translate([0,-10,0])
-	block(1,5,1/3,axle_hole=true,circular_hole=false,reinforcement=true,hollow_knob=false,flat_top=false);
+	block(1,5,1/3,axle_hole=true,circular_hole=false,reinforcement=true,hollow_knob=false,flat_top=false, solid_bottom=true);
 translate([0,-20,0])
-	block(1,5,1/3,axle_hole=true,circular_hole=false,reinforcement=true,hollow_knob=true,flat_top=false);
+	block(1,5,1/3,axle_hole=true,circular_hole=false,reinforcement=true,hollow_knob=true,flat_top=false, solid_bottom=true);
 translate([0,-30,0])
-	block(1,5,1/3,axle_hole=true,circular_hole=false,reinforcement=true,hollow_knob=true,flat_top=true);
+	block(1,5,1/3,axle_hole=true,circular_hole=false,reinforcement=true,hollow_knob=true,flat_top=true,solid_bottom=true);
 //*/
 
-module block(width,length,height,axle_hole=false,reinforcement=false, hollow_knob=false, flat_top=false, circular_hole=false, solid_bottom=true, center=false) {
+module block(width,length,height,axle_hole=false,reinforcement=false, hollow_knob=false, flat_top=false, circular_hole=false, solid_bottom=true, center=false,round=false) {
 	overall_length=(length-1)*knob_spacing+knob_diameter+wall_thickness*2;
 	overall_width=(width-1)*knob_spacing+knob_diameter+wall_thickness*2;
 	center= center==true ? 1 : 0;
@@ -104,6 +106,10 @@ module block(width,length,height,axle_hole=false,reinforcement=false, hollow_kno
 					for (xcount=[1:length-1])
 						translate([xcount*knob_spacing,ycount*knob_spacing,roof_thickness])
 							cylinder(r=knob_diameter/2, h=height*block_height+roof_thickness/4,$fs=cylinder_precision);
+		       if(round==true&&width==length)difference(){
+		       		translate([-1,-1,-1])cube([overall_width*2,overall_length*2,height*block_height*2]);
+                		translate([overall_width/2,overall_length/2,-1])cylinder(d=overall_width, h=height*block_height*2,$fs=cylinder_precision,$fa=5);
+            		}
 		}
 
 		if (reinforcement==true && width>1 && length>1)

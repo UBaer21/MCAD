@@ -19,7 +19,7 @@
 // //  standard LEGO 1x1x1 brick round no solid bottom
 //      block(1,1,1,reinforcement=true,solid_bottom=false,round=true,center=1);
 
-      
+
 
 knob_diameter=4.8;		//knobs on top of blocks
 knob_height=2;
@@ -141,18 +141,29 @@ module block(width,length,height,axle_hole=false,reinforcement=false, hollow_kno
 
 		if (reinforcement==true && width>1 && length>1)
 			difference() {
-				for (ycount=[1:width-1])
-					for (xcount=[1:length-1])
-						translate([xcount*knob_spacing,ycount*knob_spacing,0]) reinforcement(height);
-				for (ycount=[1:width-1])
-					for (xcount=[1:length-1])
-						translate([xcount*knob_spacing,ycount*knob_spacing,-roof_thickness/2]) cylinder(r=knob_diameter/2, h=height*block_height+roof_thickness, $fs=cylinder_precision);
+				for (ycount=[0:width-2])
+					for (xcount=[0:length-2])translate([
+					knob_diameter/2+wall_thickness+knob_spacing/2+xcount*knob_spacing,
+                    knob_diameter/2+wall_thickness+knob_spacing/2+ycount*knob_spacing,
+                    0])
+                    reinforcement(height);
+				for (ycount=[0:width-2])
+					for (xcount=[0:length-2])
+						translate([
+					knob_diameter/2+wall_thickness+knob_spacing/2+xcount*knob_spacing,
+                    knob_diameter/2+wall_thickness+knob_spacing/2+ycount*knob_spacing,
+                    -roof_thickness/2])
+                    cylinder(r=knob_diameter/2, h=height*block_height+roof_thickness, $fs=cylinder_precision);
 			}
 		// posts:
 		if (solid_bottom == false){
-			if (width>1 && length>1) for (ycount=[1:width-1])
-				for (xcount=[1:length-1])
-					translate([xcount*knob_spacing,ycount*knob_spacing,0]) post(height);
+			if (width>1 && length>1)
+                for (ycount=[0:width  -2])
+				for (xcount=[0:length -2])translate([
+					knob_diameter/2+wall_thickness+knob_spacing/2+xcount*knob_spacing,
+                    knob_diameter/2+wall_thickness+knob_spacing/2+ycount*knob_spacing,
+                               0])
+                    post(height);
 		}
 		if (reinforcement == true && width==1 && length!=1)
 			for (xcount=[0:length -2])

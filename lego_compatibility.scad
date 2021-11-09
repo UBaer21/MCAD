@@ -121,7 +121,7 @@ module block(width=2,length=4,height=1,axle_hole=false,reinforcement=false, holl
             // round 1x1 -> groove around bottom
             if(round == true && width == 1 && length ==1 && !(height==1/3&&flat_top))translate([overall_length/2,overall_width/2])
                 rotate_extrude($fs=cylinder_precision,$fa=5)translate([overall_length/2,0])
-                square([overall_length-(sqrt(2)*knob_spacing-knob_diameter),block_height/2-wall_thickness/2],true);
+                square([overall_length-post_diameter,block_height/2-wall_thickness/2],true);
 
             // flat_top -> groove around bottom
             if (flat_top == true) {

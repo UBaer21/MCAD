@@ -4,22 +4,22 @@
 
 
 // // Examples:
-// //  standard LEGO 4×2×1 brick solid_bottom
+// //  standard  4×2×1 brick solid_bottom
 //      block();
-
-// //  standard LEGO 2x1 tile has no pin
+//
+// //  standard 2x1 brick tile has no pin
 //      block(1,2,1/3,reinforcement=false,flat_top=true);
-// //  standard LEGO 2x1 flat has pin
+// //  standard 2x1 brick flat has pin
 //      block(1,2,1/3,reinforcement=false,solid_bottom=true,center=false);
-// //  standard LEGO 2x1 brick has pin
+// //  standard 2x1 brick has pin
 //      block(1,2,1,reinforcement=true);
-// //  standard LEGO 2x1 brick without pin
+// //  standard 2x1 brick without pin
 //      block(1,2,1,reinforcement=false);
-// //  standard LEGO 2x1x5 brick has no pin and has hollow knobs
+// //  standard 2x1x5 brick has no pin and has hollow knobs
 //      block(1,2,5,reinforcement=false,hollow_knob=true);
-// //  standard LEGO 2x2x1/3 brick round no solid bottom
+// //  standard 2x2x1/3 brick round no solid bottom
 //      block(2,2,1/3,reinforcement=true,solid_bottom=false,round=true);
-// //  standard LEGO 1x1x1 brick round no solid bottom
+// //  standard 1x1x1 brick round no solid bottom
 //      block(1,1,1,reinforcement=true,solid_bottom=false,round=true,center=1);
 
 
